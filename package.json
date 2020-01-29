@@ -12,14 +12,17 @@
   },
   "devDependencies": {
     "eslint": "6.3.0",
-    "eslint-config-htmlacademy": "0.5.2"
+    "eslint-config-htmlacademy": "0.5.2",
+    "browser-sync": "2.26.x",
+    "gulp": "4.0.x"
   },
   "license": "MIT",
   "dependencies": {},
   "scripts": {
-    "test": "eslint js/"
+    "test": "eslint js/",
+    "start": "gulp start"
   },
   "engines": {
-    "node": "8.11"
+    "node": "12.13"
   }
 }
