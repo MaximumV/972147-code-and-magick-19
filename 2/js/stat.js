@@ -38,15 +38,21 @@ var getFillStyleByName = function (name) {
   return name === 'Вы' ? 'rgba(255, 0, 0, 1)' : 'hsl(240, 100%, 50%, ' + Math.random() + ')';
 };
 
-window.renderStatistics = function (ctx, names, times) {
-  var maxTime = searchMaxTime(times);
-  var columnX = CANVAS_LEFT_OFFSET;
-  renderCloudWithShadow(ctx, 100, 10, 10);
+var renderTitle = function (ctx, titleArray) {
+  var textY = CANVAS_TOP_OFFSET;
   ctx.fillStyle = FONT_COLOR;
   ctx.font = FONT_STYLE;
-  ctx.fillText('Ура вы победили!', CANVAS_LEFT_OFFSET, CANVAS_TOP_OFFSET);
-  ctx.fillText('Список результатов:', CANVAS_LEFT_OFFSET, CANVAS_TOP_OFFSET + 25);
-  for (var i = 0; i < names.length; i++) {
+  titleArray.forEach(function (item) {
+    ctx.fillText(item, CANVAS_LEFT_OFFSET, textY);
+    textY += 25;
+  });
+};
+
+var renderColumns = function (ctx, names, times) {
+  var maxTime = searchMaxTime(times);
+  var columnX = CANVAS_LEFT_OFFSET;
+  var minArrayRange = names.length < times.length ? names.length : names.length;
+  for (var i = 0; i < minArrayRange; i++) {
     var columnHeight = getColumnHeightByTime(times[i], maxTime);
     ctx.fillStyle = FONT_COLOR;
     ctx.fillText(names[i], columnX, CANVAS_BOTTOM_OFFSET);
@@ -55,4 +61,10 @@ window.renderStatistics = function (ctx, names, times) {
     ctx.fillRect(columnX, CANVAS_BOTTOM_OFFSET - columnHeight - 25, COLUMN_WIDTH, columnHeight);
     columnX += COLUMN_WIDTH + COLUMN_OFFSET;
   }
+};
+
+window.renderStatistics = function (ctx, names, times) {
+  renderCloudWithShadow(ctx, 100, 10, 10);
+  renderTitle(ctx, ['Ура вы победили!', 'Список результатов:']);
+  renderColumns(ctx, names, times);
 };
