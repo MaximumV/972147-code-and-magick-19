@@ -44,6 +44,9 @@ var WIZARD_FIREBALL_COLORS = [
   '#e6e848'
 ];
 var COUNT_WIZARDS = 4;
+var ENTER_KEY = 'Enter';
+var ESC_KEY = 'Escape';
+var HIDDEN_CLASS = 'hidden';
 
 var setupElement = document.querySelector('.setup');
 var closeSetupElement = document.querySelector('.setup-close');
@@ -95,32 +98,32 @@ var generateRandomWizards = function () {
 };
 
 var showSetup = function () {
-  setupElement.classList.remove('hidden');
+  setupElement.classList.remove(HIDDEN_CLASS);
 };
 
 var showSetupByEnterKey = function (evt) {
-  if (evt.key === 'Enter') {
-    setupElement.classList.remove('hidden');
+  if (evt.key === ENTER_KEY) {
+    setupElement.classList.remove(HIDDEN_CLASS);
   }
 };
 
 var showSimilarSetup = function () {
-  setupSimilarElement.classList.remove('hidden');
+  setupSimilarElement.classList.remove(HIDDEN_CLASS);
 };
 
 var hideSetup = function () {
-  setupElement.classList.add('hidden');
+  setupElement.classList.add(HIDDEN_CLASS);
 };
 
 var hideSetupByEscKey = function (evt) {
-  if (!setupElement.classList.contains('hide') && evt.key === 'Escape'
+  if (!setupElement.classList.contains(HIDDEN_CLASS) && evt.key === ESC_KEY
     && document.activeElement !== nameInputElement) {
     hideSetup();
   }
 };
 
 var hideSetupByEnterKey = function (evt) {
-  if (!setupElement.classList.contains('hide') && evt.key === 'Enter'
+  if (!setupElement.classList.contains(HIDDEN_CLASS) && evt.key === ENTER_KEY
     && document.activeElement === closeSetupElement) {
     hideSetup();
   }
