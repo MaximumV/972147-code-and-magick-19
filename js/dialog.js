@@ -8,13 +8,20 @@
   var setupSimilarElement = document.querySelector('.setup-similar');
   var nameInputElement = document.querySelector('.setup-user-name');
   var dialogDragElement = document.querySelector('.upload');
+  var StartCoors = {
+    x: window.getComputedStyle(setupElement).getPropertyValue('top'),
+    y: window.getComputedStyle(setupElement).getPropertyValue('left')
+  };
+
   var showSetup = function () {
     setupElement.classList.remove(window.util.HIDDEN_CLASS);
+    setupElement.style.top = StartCoors.x;
+    setupElement.style.left = StartCoors.y;
   };
 
   var showSetupByEnterKey = function (evt) {
     if (evt.key === window.util.ENTER_KEY) {
-      setupElement.classList.remove(window.util.HIDDEN_CLASS);
+      showSetup();
     }
   };
 
@@ -39,6 +46,7 @@
       hideSetup();
     }
   };
+
   var onDragSetup = function (evt) {
     evt.preventDefault();
     var coors = {
@@ -46,6 +54,7 @@
       y: evt.clientY
     };
     var dragged = false;
+
     var onMouseMove = function (moveEvt) {
       moveEvt.preventDefault();
       dragged = true;
@@ -76,9 +85,12 @@
         dialogDragElement.addEventListener('click', onClickPreventDefault);
       }
     };
+
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
   };
+
+
   openSetupElement.addEventListener('click', showSetup);
   openSetupIconElement.addEventListener('keydown', showSetupByEnterKey);
   showSimilarSetup();

@@ -31,6 +31,7 @@
 
   var renderTitle = function (ctx, titleArray) {
     var textY = CANVAS_TOP_OFFSET;
+
     ctx.fillStyle = FONT_COLOR;
     ctx.font = FONT_STYLE;
     titleArray.forEach(function (item) {
@@ -43,6 +44,7 @@
     var maxTime = window.util.searchMaxArrayValue(times);
     var columnX = CANVAS_LEFT_OFFSET;
     var minArrayRange = names.length < times.length ? names.length : names.length;
+
     for (var i = 0; i < minArrayRange; i++) {
       var columnHeight = getColumnHeightByTime(times[i], maxTime);
       ctx.fillStyle = FONT_COLOR;
