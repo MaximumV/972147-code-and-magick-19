@@ -32,7 +32,6 @@
     return maxTime;
   };
   var showError = function (error) {
-    console.log(error);
     errorElement.style.position = 'absolute';
     errorElement.style.left = '0';
     errorElement.style.right = '0';
