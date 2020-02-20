@@ -29,6 +29,6 @@
     wizardsListElement.appendChild(fragment);
   };
 
-  //window.backend.load(generateWizards, window.util.showError);
+  window.backend.load(generateWizards, window.util.showError);
 })();
 

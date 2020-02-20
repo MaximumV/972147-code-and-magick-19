@@ -2,7 +2,7 @@
 
 (function () {
   var SUCCESS_CODE = 200;
-  var REQUEST_TIMEOUT = 1;
+  var REQUEST_TIMEOUT = 7000;
   var onXhrLoad = function (status, text) {
     switch (status) {
       case SUCCESS_CODE:
