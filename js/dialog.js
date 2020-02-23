@@ -16,6 +16,7 @@
   };
 
   var showSetup = function () {
+    window.wizards.generate();
     setupElement.classList.remove(window.util.HIDDEN_CLASS);
     setupElement.style.top = StartCoors.x;
     setupElement.style.left = StartCoors.y;

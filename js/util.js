@@ -2,6 +2,7 @@
 
 (function () {
   var errorElement = document.createElement('div');
+  var lastTimeout;
   var getRandomArrayElement = function (array) {
     return array[Math.floor(Math.random() * array.length)];
   };
@@ -44,6 +45,12 @@
   var hideError = function () {
     errorElement.style.display = 'none';
   };
+  var debounce = function (cb, timeout) {
+    if (lastTimeout) {
+      window.clearTimeout(lastTimeout);
+    }
+    lastTimeout = window.setTimeout(cb, timeout);
+  };
 
   window.util = {
     ENTER_KEY: 'Enter',
@@ -53,6 +60,7 @@
     shuffleArray: shuffleArray,
     searchMaxArrayValue: searchMaxArrayValue,
     showError: showError,
-    hideError: hideError
+    hideError: hideError,
+    debounce: debounce
   };
 })();
