@@ -3,6 +3,9 @@
 (function () {
   var SUCCESS_CODE = 200;
   var REQUEST_TIMEOUT = 7000;
+  var XHR_RESPONSE_TYPE = 'json';
+  var SIMILAR_WIZARDS_URL = 'https://js.dump.academy/code-and-magick/data';
+  var SAVE_WIZARD_URL = 'https://js.dump.academy/code-and-magick';
   var onXhrLoad = function (status, text) {
     switch (status) {
       case SUCCESS_CODE:
@@ -48,14 +51,10 @@
   var onXhrTimeout = function () {
     return 'Не удалось выполнить запрос за ' + REQUEST_TIMEOUT / 1000 + 'секунд. Проверьте скорость соединения';
   };
-
-  var loadData = function (onLoad, onError) {
-    var URL = 'https://js.dump.academy/code-and-magick/data';
+  var xhrHandle = function (method, url, onError, onLoad, data) {
     var xhr = new XMLHttpRequest();
-
-    xhr.responseType = 'json';
+    xhr.responseType = XHR_RESPONSE_TYPE;
     xhr.timeout = REQUEST_TIMEOUT;
-
     xhr.addEventListener('load', function () {
       var result = onXhrLoad(xhr.status, xhr.statusText);
       if (result.error) {
@@ -73,35 +72,16 @@
       onError(onXhrTimeout());
     });
 
-    xhr.open('GET', URL);
-    xhr.send();
+    xhr.open(method, url);
+    xhr.send(data);
+  };
+
+  var loadData = function (onLoad, onError) {
+    xhrHandle('GET', SIMILAR_WIZARDS_URL, onError, onLoad);
   };
 
   var saveData = function (data, onLoad, onError) {
-    var URL = 'https://js.dump.academy/code-and-magick';
-    var xhr = new XMLHttpRequest();
-
-    xhr.timeout = REQUEST_TIMEOUT;
-
-    xhr.addEventListener('load', function () {
-      var result = onXhrLoad(xhr.status, xhr.statusText);
-      if (result.error) {
-        onError(result.msg);
-      } else {
-        onLoad(xhr.response);
-      }
-    });
-
-    xhr.addEventListener('error', function () {
-      onError(onXhrError());
-    });
-
-    xhr.addEventListener('timeout', function () {
-      onError(onXhrTimeout());
-    });
-
-    xhr.open('POST', URL);
-    xhr.send(data);
+    xhrHandle('POST', SAVE_WIZARD_URL, onError, onLoad, data);
   };
 
   window.backend = {
