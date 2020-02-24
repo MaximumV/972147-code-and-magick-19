@@ -2,6 +2,8 @@
 
 (function () {
   var setupElement = document.querySelector('.setup');
+  var formElement = setupElement.querySelector('form');
+  var formSubmitElement = setupElement.querySelector('.setup-submit');
   var closeSetupElement = document.querySelector('.setup-close');
   var openSetupElement = document.querySelector('.setup-open');
   var openSetupIconElement = openSetupElement.querySelector('.setup-open-icon');
@@ -98,4 +100,20 @@
   dialogDragElement.addEventListener('mousedown', onDragSetup);
   document.addEventListener('keydown', hideSetupByEscKey);
   closeSetupElement.addEventListener('keydown', hideSetupByEnterKey);
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+    var formSubmitContent = formSubmitElement.textContent;
+    formSubmitElement.setAttribute('disabled', 'disabled');
+    formSubmitElement.textContent = 'Загружаю...';
+    window.backend.save(new FormData(formElement), function () {
+      window.util.hideError();
+      hideSetup();
+      formSubmitElement.removeAttribute('disabled');
+      formSubmitElement.textContent = formSubmitContent;
+    }, function (error) {
+      window.util.showError(error);
+      formSubmitElement.removeAttribute('disabled');
+      formSubmitElement.textContent = formSubmitContent;
+    });
+  });
 })();
